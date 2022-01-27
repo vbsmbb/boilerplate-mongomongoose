@@ -41,12 +41,22 @@ const createManyPeople = (arrayOfPeople, done) => {
   });
 };
 
+// Use PERSON model to find people by name
+let personName = "Jane Fonda";
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  Person.find({name: personName}, (err, personFound) => {
+    if (err) return console.error(err);
+    done(null, personFound);
+  });
 };
 
+// Use the PERSON model to find a single person with the favorite FOOD
+let food = "beans";
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({favoriteFoods: food}, (err, data) => {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
 
 const findPersonById = (personId, done) => {
