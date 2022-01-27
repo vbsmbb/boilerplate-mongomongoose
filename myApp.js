@@ -16,6 +16,7 @@ const personSchema = new Schema({
 // Create a person model
 const Person = mongoose.model("Person", personSchema);
 
+// Use PERSON model to save a single person
 const createAndSavePerson = (done) => {
   const janeFonda = new Person({name: "Jane Fonda", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
   
@@ -25,8 +26,19 @@ const createAndSavePerson = (done) => {
   });
 };
 
+// Create an array of persons
+let arrayOfPeople = [
+  {name: "Buddy", age: 63, favoriteFoods: ["hamburger", "beans", "eggs"]},
+  {name: "Nick Boudreau", age: 49, favoriteFoods: ["chicken", "rolls", "peanut butter"]},
+  {name: "Dennis the Meance", age: 11, favoriteFoods: ["hot dogs", "hamburgers", "popcorn"]}
+];
+
+// Use the PERSON model to save many people at once
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err,people) => {
+    if (err) return console.error(err);
+    done(null, people);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
