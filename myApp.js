@@ -59,14 +59,29 @@ const findOneByFood = (food, done) => {
   });
 };
 
+// Use the PERSON model to find a person by its ID
 const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findById(personId, (err, data) => {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
-  done(null /*, data*/);
+  Person.findById(personId, (err, person) => {
+    if (err) return console.error(err);
+    
+    // Add hamburger to the PErson's favorite food
+    person.favoriteFoods.push(foodToAdd);
+    
+    // Save the updated PERSON
+    person.save((err, updatedPerson) => {
+      if (err) return console.error(err);
+      done(null, updatedPerson);
+    });
+  });
 };
 
 const findAndUpdate = (personName, done) => {
