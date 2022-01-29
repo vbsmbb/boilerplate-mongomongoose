@@ -42,7 +42,7 @@ const createManyPeople = (arrayOfPeople, done) => {
 };
 
 // Use PERSON model to find people by name
-let personName = "Jane Fonda";
+//let personName = "Jane Fonda";
 const findPeopleByName = (personName, done) => {
   Person.find({name: personName}, (err, personFound) => {
     if (err) return console.error(err);
@@ -51,7 +51,7 @@ const findPeopleByName = (personName, done) => {
 };
 
 // Use the PERSON model to find a single person with the favorite FOOD
-let food = "beans";
+//let food = "beans";
 const findOneByFood = (food, done) => {
   Person.findOne({favoriteFoods: food}, (err, data) => {
     if (err) return console.error(err);
@@ -67,6 +67,7 @@ const findPersonById = (personId, done) => {
   });
 };
 
+// Find a PERSON and then add a food to their favorites array
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
@@ -84,6 +85,7 @@ const findEditThenSave = (personId, done) => {
   });
 };
 
+// Find a person by name and update their age
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
@@ -93,8 +95,12 @@ const findAndUpdate = (personName, done) => {
   });
 };
 
+// Find a person using their ID and remove them
 const removeById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findByIdAndRemove(personId, (err,data) => {
+    if (err) return console.error(err);
+    done(null, data);
+  })
 };
 
 const removeManyPeople = (done) => {
